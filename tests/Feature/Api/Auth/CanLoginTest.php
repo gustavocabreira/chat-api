@@ -42,3 +42,14 @@ test('it should return unprocessable entity when trying to login with an invalid
 
     $response->assertJsonPath("errors.$key[0].0", $expectedErrors[$key[0]]);
 })->with('invalid_payload');
+
+test('it should return unauthorized when trying to login with invalid credentials', function () {
+    $response = $this->postJson(route('api.auth.login'), [
+        'email' => 'test@test.com',
+        'password' => 'wrong password',
+    ]);
+
+    $response
+        ->assertStatus(Response::HTTP_UNAUTHORIZED)
+        ->assertJsonStructure(['message']);
+});
