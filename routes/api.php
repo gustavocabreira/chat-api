@@ -8,4 +8,10 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('/users', [UserController::class, 'store'])->name('api.users.store');
+Route::prefix('api')->name('api.')->group(function () {
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/user', [UserController::class, 'me'])->name('users.me');
+    });
+});

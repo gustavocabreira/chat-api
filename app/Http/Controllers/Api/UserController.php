@@ -33,4 +33,9 @@ class UserController extends Controller
 
         return response()->json($user, Response::HTTP_CREATED);
     }
+
+    public function me(Request $request): JsonResponse
+    {
+        return response()->json($request->user(), Response::HTTP_OK);
+    }
 }

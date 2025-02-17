@@ -42,7 +42,7 @@ dataset('invalid_payload', [
         ['email' => Str::repeat('*', 255)],
         ['email' => 'The email field must be a valid email address.'],
     ],
-    'email already exists' => function() {
+    'email already exists' => function () {
         User::factory()->create(['email' => 'test@test.com']);
 
         return [
