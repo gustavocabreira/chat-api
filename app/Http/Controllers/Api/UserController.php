@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
@@ -36,6 +37,20 @@ class UserController extends Controller
 
     public function me(Request $request): JsonResponse
     {
+        return response()->json($request->user(), Response::HTTP_OK);
+    }
+
+    public function update(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255',
+                Rule::unique('users', 'email')->ignore($request->user()->id),
+            ],
+        ]);
+
+        $request->user()->update($validated);
+
         return response()->json($request->user(), Response::HTTP_OK);
     }
 }

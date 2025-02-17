@@ -15,5 +15,7 @@ Route::prefix('api')->name('api.')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/user', [UserController::class, 'me'])->name('users.me');
+
+        Route::put('/user', [UserController::class, 'update'])->name('users.update');
     });
 });
