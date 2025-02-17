@@ -62,6 +62,9 @@ dataset('invalid_payload', [
     'password with no symbols' => [
         ['password' => 'aA12345678', 'password_confirmation' => 'aA12345678'], ['password' => 'The password field must contain at least one symbol.'],
     ],
+    'password confirmation does not match' => [
+        ['name' => fake()->name, 'email' => fake()->email, 'password' => 'aA@1234567', 'password_confirmation' => 'aA@123456'], ['password' => 'The password field confirmation does not match.'],
+    ],
 ]);
 
 test('it should return unprocessable entity when trying to create a user with an invalid payload', function ($payload, $expectedErrors) {
