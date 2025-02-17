@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\UserContactController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,7 +16,8 @@ Route::prefix('api')->name('api.')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/user', [UserController::class, 'me'])->name('users.me');
-
         Route::put('/user', [UserController::class, 'update'])->name('users.update');
+
+        Route::post('/contacts', [UserContactController::class, 'sendFriendRequest'])->name('contacts.store');
     });
 });
